@@ -1,44 +1,53 @@
 import React, { Component } from 'react';
-import { MDCDialog, MDCDialogFoundation } from '@material/dialog';
+import { MDCDialog } from '@material/dialog';
 import { ArticleDialog } from './article-dialog';
 import getNewsArticles from './getNewsArticle';
 import './App.css';
 
 const DEFAULT_IMAGE = 'https://fashionunited.info/global-assets/img/default/fu-default_1200x630_black-favicon.jpg';
+//const BASE_URL = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+
 
 class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { newsArticles: [] };
+    this.state = {
+      newsArticles: [],
+      currentArticle: null,
+      variables: {
+        offset: 0,
+        limit: 10
+      }
+    };
   }
 
-  async componentWillMount() {
-    const variables = {
-      offset: 0,
-      limit: 10
-    }
 
-    const result = await getNewsArticles(variables);
+  async componentWillMount() {
+
+    const result = await getNewsArticles(this.state.variables);
 
     this.setState({
       newsArticles: result.newsArticles,
-      currentArticle: null
+      currentArticle: this.state.currentArticle,
+      variables: this.state.variables
     });
   }
 
   newsArticles() {
+    //console.log(this.state.newsArticles);
     return this.state.newsArticles.map((newsArticle, index) =>
       Object.values(newsArticle).filter((article) => {
         if (article == null) {
           return false;
         }
+        article['slug'] = '/' + article.slug + '/' + article.id;
         return true;
       }).map((article, i) =>
 
         <div key={index + '-' + i} class='mdc-layout-grid__cell mdc-layout-grid__cell--span-4'>
           <div class="mdc-card">
-            <a class="mdc-card__primary-action" href='#' onClick={() => this.openDialog(article)}>
+            <a class="mdc-card__primary-action" onClick={() => this.openDialog(article)}>
               <div class="mdc-card__media mdc-card__media--16-9"
                 style={{ background: 'white url(' + (article.imageUrl || DEFAULT_IMAGE) + ') no-repeat center' }}>
               </div>
@@ -51,6 +60,7 @@ class App extends Component {
                 <a class="mdc-button mdc-button--outlined" href={article.url}>Read More</a>
               </div>
             </div>
+            <span hidden={true} class='slug-url'>{article.slug}</span>
           </div>
         </div>
 
@@ -62,6 +72,27 @@ class App extends Component {
 
   getMoreNews() {
 
+    //console.log(this.state.newsArticles)
+
+    let variables = this.state.variables;
+    variables.offset = 0
+    variables.limit = (this.state.variables.limit + 10)
+    //console.log(variables);
+
+    getNewsArticles(variables)
+      .then((res) => {
+        //console.log(res);
+        this.setState({
+          newsArticles: res.newsArticles,
+          currentArticle: this.state.currentArticle,
+          variables: variables
+        });
+      })
+      .catch((err) => {
+        //console.log(err);
+        alert('Error loading more news')
+      });
+
   }
 
   openDialog(article) {
@@ -69,8 +100,9 @@ class App extends Component {
 
     this.setState({
       newsArticles: this.state.newsArticles,
-      currentArticle: article
-    })
+      currentArticle: article,
+      variables: this.state.variables
+    });
 
     dialog.show();
   }

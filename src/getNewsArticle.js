@@ -2,17 +2,6 @@ import { request } from 'graphql-request';
 
 const endPoint = 'https://fashionunited.info/graphql/';
 
-// internationalfashionjobsComNewsArticle{
-//     id
-//     title
-//     url
-//     imageUrl
-//     description
-// }
-
-// category{
-//     title
-// }
 
 const query =
     `
@@ -25,6 +14,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedRuNewsArticle{
                 id
@@ -32,6 +22,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedCaFrNewsArticle{
                 id
@@ -39,6 +30,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedCaNewsArticle{
                 id
@@ -46,6 +38,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedDeNewsArticle{
                 id
@@ -53,6 +46,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedComNewsArticle{
                 id
@@ -60,6 +54,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedInNewsArticle{
                 id
@@ -67,6 +62,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedBeNewsArticle{
                 id
@@ -74,6 +70,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedClNewsArticle{
                 id
@@ -81,6 +78,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedCnNewsArticle{
                 id
@@ -88,6 +86,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedUkNewsArticle{
                 id
@@ -95,6 +94,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedEsNewsArticle{
                 id
@@ -102,6 +102,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedComPeNewsArticle{
                 id
@@ -109,6 +110,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             auFashionunitedComNewsArticle{
                 id
@@ -116,6 +118,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedBeFrNewsArticle{
                 id
@@ -123,6 +126,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedFrNewsArticle{
                 id
@@ -130,6 +134,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedCoNewsArticle{
                 id
@@ -137,6 +142,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedChNewsArticle{
                 id
@@ -144,6 +150,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedInfoNewsArticle{
                 id
@@ -151,6 +158,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionweekwebComNewsArticle{
                 id
@@ -158,6 +166,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedMxNewsArticle{
                 id
@@ -165,6 +174,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedComArNewsArticle{
                 id
@@ -172,6 +182,7 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
             fashionunitedNlNewsArticle{
                 id
@@ -179,10 +190,23 @@ const query =
                 url
                 imageUrl
                 description
+                slug
             }
         }
     }
 `;
+
+// internationalfashionjobsComNewsArticle{
+//     id
+//     title
+//     url
+//     imageUrl
+//     description
+// }
+
+// category{
+//     title
+// }
 
 export default function getNewsArticles(variables = {}) {
     return request(endPoint, query, variables)

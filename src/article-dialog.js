@@ -4,7 +4,7 @@ import React, { Component } from "react";
 export class ArticleDialog extends Component {
 
     render() {
-        console.log(this.props.article);
+        //console.log(this.props.article);
         return (
 
             <div id="mdc-dialog-article" class="mdc-dialog">
